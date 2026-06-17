@@ -9,7 +9,7 @@ const app = express();
 connectBD();
 app.use(express.json());
 app.use(cors({ origin:[
-    " http://localhost:5173",
+    "http://localhost:5173",
     "https://frond-node.vercel.app"
 ] }));
 const PORT = process.env.PORT;
