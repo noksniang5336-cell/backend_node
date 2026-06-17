@@ -8,7 +8,10 @@ dotenv.config()
 const app = express();
 connectBD();
 app.use(express.json());
-app.use(cors({ origin: "*"}));
+app.use(cors({ origin:[
+    " http://localhost:5173/",
+    "https://frond-node.vercel.app/"
+] }));
 const PORT = process.env.PORT;
 app.listen( PORT , () => {
     console.log(`serveur démarré sur http://localhost:${PORT}` );
