@@ -1,4 +1,7 @@
 const User = require('../models/user.model');
+const Question = require('../models/question.model');
+const Reponse = require('../models/reponse.model');
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -82,6 +85,64 @@ exports.connexion = async (req , res ) => {
      }
 
 }
+// récupérer le profil utilisateur
+
+exports.profil = async (req, res) => {
+
+    try {
+
+        const userId = req.params.id;
+
+
+        const user = await User.findById(userId)
+        .select("-password");
+
+
+        if(!user){
+
+            return res.status(404).json({
+                message:"Utilisateur introuvable"
+            });
+
+        }
+
+
+
+        const nombreQuestions = await Question.countDocuments({
+            auteur:userId
+        });
+
+
+
+        const nombreReponses = await Reponse.countDocuments({
+            auteur:userId
+        });
+
+
+
+        res.status(200).json({
+
+            user,
+
+            questions:nombreQuestions,
+
+            reponses:nombreReponses
+
+        });
+
+
+
+    } catch(error){
+
+        res.status(500).json({
+            message:error.message
+        });
+
+        console.log(error);
+
+    }
+
+}
 
 
 
@@ -96,7 +157,7 @@ exports.connexion = async (req , res ) => {
 
 
 
-// la fonction de connexion
+
 
 
 
