@@ -1,30 +1,19 @@
-const mongoose = require("mongoose");
-
+const mongoose = require('mongoose');
 
 const reponseSchema = new mongoose.Schema({
-
     contenu: {
         type: String,
         required: true
     },
-
-
     question: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Question",
+        ref: 'Question', // Optionnel : lie au modèle Question si tu en as un
         required: true
     },
-
-
-    auteur: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
-
-
-}, {
-    timestamps: true
 });
 
-
-module.exports = mongoose.model("Reponse", reponseSchema);
+module.exports = mongoose.model('Reponse', reponseSchema);
