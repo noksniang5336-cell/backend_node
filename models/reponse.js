@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const reponseSchema = new mongoose.Schema({
   questionId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Question',
-    required: true
+    required: true,
+    ref: "Question"
   },
   contenu: {
     type: String,
@@ -16,4 +16,6 @@ const reponseSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Reponse', reponseSchema);
+// ✅ FIX IMPORTANT : éviter overwrite model
+module.exports =
+  mongoose.models.Reponse || mongoose.model("Reponse", reponseSchema);
