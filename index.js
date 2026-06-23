@@ -4,6 +4,9 @@ const cors = require('cors')
 const connectBD = require("./config/db");
 const userRoute = require('./routes/user.route')
 const reponseRoute = require("./routes/reponse.route");
+const questionRoute=require("./routes/question.route");
+
+
 
 
 
@@ -30,3 +33,4 @@ app.get('/' , (req , res) => {
 })
 
 app.use("/api/reponses", reponseRoute);
+app.use("/api/questions",questionRoute);
