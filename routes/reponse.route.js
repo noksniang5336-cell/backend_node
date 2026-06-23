@@ -1,12 +1,28 @@
 const express = require('express');
 const router = express.Router();
-// Importation des fonctions du contrôleur (on va les créer juste après)
-const { getReponsesByQuestion, createReponse } = require('../controllers/reponse.controller');
 
-// GET /api/reponses/:questionId -> Appelé par ton useEffect
+const { 
+  getReponsesByQuestion, 
+  createReponse,
+  updateReponse,
+  deleteReponse
+} = require('../controllers/reponse.controller');
+
+
+// récupérer les réponses
 router.get('/:questionId', getReponsesByQuestion);
 
-// POST /api/reponses -> Appelé par ton bouton "Envoyer"
+
+// ajouter une réponse
 router.post('/', createReponse);
+
+
+// modifier une réponse
+router.put('/:id', updateReponse);
+
+
+// supprimer une réponse
+router.delete('/:id', deleteReponse);
+
 
 module.exports = router;
