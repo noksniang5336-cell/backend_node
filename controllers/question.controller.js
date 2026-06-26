@@ -2,42 +2,43 @@ const Question = require("../models/Question");
 
 const createQuestion = async (req, res) => {
   try {
-    const { titre, description, tags } = req.body;
+    const { titre, description } = req.body;
 
-    const question = await Question.create({
+    const nouvelleQuestion = await Question.create({
       titre,
-      description,
-      tags
+      description
     });
 
-    res.status(201).json(question);
+    res.status(201).json(nouvelleQuestion);
 
-  } catch(error) {
+  } catch (error) {
     res.status(500).json({
-      message: error.message
+      error: error.message
     });
   }
 };
 
 
-const getQuestions = async (req,res)=>{
+const getQuestions = async (req, res) => {
   try {
 
     const questions = await Question.find().sort({
-      createdAt:-1
+      createdAt: -1
     });
 
     res.json(questions);
 
-  }catch(error){
+  } catch(error){
+
     res.status(500).json({
-      message:error.message
+      error:error.message
     });
+
   }
-}
+};
 
 
 module.exports = {
- createQuestion,
- getQuestions
-}
+  createQuestion,
+  getQuestions
+};
