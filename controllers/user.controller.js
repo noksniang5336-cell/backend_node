@@ -87,60 +87,50 @@ exports.connexion = async (req , res ) => {
 }
 // récupérer le profil utilisateur
 
-exports.profil = async (req, res) => {
+exports.profil = async (req,res)=>{
 
-    try {
+try{
 
-        const userId = req.params.id;
-
-
-        const user = await User.findById(userId)
-        .select("-password");
+ const userId = req.user.id;
 
 
-        if(!user){
-
-            return res.status(404).json({
-                message:"Utilisateur introuvable"
-            });
-
-        }
+ const user = await User.findById(userId)
+ .select("-password");
 
 
-
-        const nombreQuestions = await Question.countDocuments({
-            auteur:userId
-        });
-
-
-
-        const nombreReponses = await Reponse.countDocuments({
-            auteur:userId
-        });
+ if(!user){
+   return res.status(404).json({
+     message:"Utilisateur introuvable"
+   });
+ }
 
 
-
-        res.status(200).json({
-
-            user,
-
-            questions:nombreQuestions,
-
-            reponses:nombreReponses
-
-        });
+ const nombreQuestions = await Question.countDocuments({
+   auteur:userId
+ });
 
 
+ const nombreReponses = await Reponse.countDocuments({
+   auteur:userId
+ });
 
-    } catch(error){
 
-        res.status(500).json({
-            message:error.message
-        });
+ res.json({
+   user,
+   questions:nombreQuestions,
+   reponses:nombreReponses
+ });
 
-        console.log(error);
 
-    }
+}catch(error){
+
+ console.log(error);
+
+ res.status(500).json({
+   message:error.message
+ });
+
+}
 
 }
 

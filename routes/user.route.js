@@ -8,7 +8,7 @@ router.post("/connexion", connexion);
 
 
 // récupérer le profil utilisateur
-router.get("/profil/:id", profil);
+router.get("/profil",  auth, profil);
 
 
 
