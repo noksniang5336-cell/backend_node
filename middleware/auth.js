@@ -2,13 +2,16 @@ const jwt = require("jsonwebtoken");
 
 const auth = (req, res, next) => {
 
-    const token = req.headers.authorization;
+    const authHeader = req.headers.authorization;
 
-    if(!token){
+    if (!authHeader) {
         return res.status(401).json({
-            message:"Token manquant"
+            message: "Token manquant"
         });
     }
+
+
+    const token = authHeader.split(" ")[1];
 
 
     try {
@@ -22,10 +25,10 @@ const auth = (req, res, next) => {
 
         next();
 
-    } catch(error){
+    } catch(error) {
 
         return res.status(401).json({
-            message:"Token invalide"
+            message: "Token invalide"
         });
 
     }
