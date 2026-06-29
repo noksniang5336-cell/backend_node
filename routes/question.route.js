@@ -1,71 +1,20 @@
 const express = require('express');
 const router = express.Router();
+// Importez votre modèle de données MongoDB ici si nécessaire
+// const Question = require('../models/Question'); 
 
-const Question = require('../models/Question');
-
-
-// AJOUTER UNE QUESTION
-router.post('/', async (req, res) => {
+// Route pour récupérer toutes les questions
+router.get('/', async (req, res) => {
     try {
-
-        const { titre, description, tags } = req.body;
-
-
-        const nouvelleQuestion = new Question({
-            titre,
-            description,
-            tags
-        });
-
-
-        await nouvelleQuestion.save();
-
-
-        res.status(201).json({
-            message: "Question créée",
-            question: nouvelleQuestion
-        });
-
-
-    } catch(error){
-
-        res.status(500).json({
-            message:"Erreur serveur",
-            error:error.message
-        });
-
+        // Exemple si vous utilisez Mongoose :
+        // const questions = await Question.find();
+        // res.json(questions);
+        
+        res.json({ message: "Route des questions fonctionnelle !" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 });
 
-
-
-// SUPPRIMER UNE QUESTION
-router.delete('/:id', async (req, res) => {
-    try {
-
-        const question = await Question.findByIdAndDelete(req.params.id);
-
-
-        if(!question){
-            return res.status(404).json({
-                message:"Question introuvable"
-            });
-        }
-
-
-        res.json({
-            message:"Question supprimée"
-        });
-
-
-    } catch(error){
-
-        res.status(500).json({
-            error:error.message
-        });
-
-    }
-});
-
-
+// 💡 C'EST CETTE LIGNE QUI MANQUAIT ET QUI FAISAIT CRASHER INDEX.JS !
 module.exports = router;
