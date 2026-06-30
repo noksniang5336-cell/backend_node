@@ -74,6 +74,40 @@ router.post('/', async (req, res) => {
 
 });
 
+// DELETE supprimer une question
+router.delete("/:id", async (req, res) => {
+
+  try {
+
+    const question = await Question.findByIdAndDelete(
+      req.params.id
+    );
+
+
+    if(!question){
+
+      return res.status(404).json({
+        message:"Question introuvable"
+      });
+
+    }
+
+
+    res.json({
+      message:"Question supprimée avec succès"
+    });
+
+
+  } catch(error){
+
+    res.status(500).json({
+      message:error.message
+    });
+
+  }
+
+});
+
 
 
 module.exports = router;
