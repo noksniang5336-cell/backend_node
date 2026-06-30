@@ -1,6 +1,6 @@
 const User = require('../models/user.model');
 const Question = require('../models/question');
-const Reponse = require('../models/Reponse');
+const Reponse = require('../models/reponse');
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
