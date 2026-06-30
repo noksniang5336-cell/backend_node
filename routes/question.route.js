@@ -1,13 +1,30 @@
 const express = require('express');
 const router = express.Router();
 
+const Question = require("../models/Question");
 // GET toutes les questions
-router.get('/', async (req, res) => {
-    try {
-        res.json({ message: "Route des questions fonctionnelle !" });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+router.get("/", async (req, res) => {
+
+  try {
+
+    const questions = await Question.find()
+      .populate("auteur", "nom email")
+      .sort({ createdAt: -1 });
+
+
+    res.json({
+      questions
+    });
+
+
+  } catch(error){
+
+    res.status(500).json({
+      message: error.message
+    });
+
+  }
+
 });
 
 // ✅ POST nouvelle question (MANQUANT)
