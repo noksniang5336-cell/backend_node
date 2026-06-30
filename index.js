@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(cors({
     origin:[
         "http://localhost:5173",
-        "https://frond-node.vercel.app"
+        "https://frond-node-1mbc.vercel.app"
     ]
 }));
 
