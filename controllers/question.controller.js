@@ -1,12 +1,14 @@
-const Question = require("../models/Question");
+const Question = require("../models/question");
 
 const createQuestion = async (req, res) => {
   try {
-    const { titre, description } = req.body;
+    const { titre, description ,tags} = req.body;
 
     const nouvelleQuestion = await Question.create({
       titre,
-      description
+      description,
+      tags,
+      auteur : req.user.id
     });
 
     res.status(201).json(nouvelleQuestion);
@@ -15,6 +17,7 @@ const createQuestion = async (req, res) => {
     res.status(500).json({
       error: error.message
     });
+    console.log(error);
   }
 };
 

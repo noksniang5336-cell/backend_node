@@ -1,113 +1,122 @@
 const express = require('express');
 const router = express.Router();
-
-const Question = require("../models/question");
-
-
-// GET toutes les questions
-router.get("/", async (req, res) => {
-
-  try {
-
-    const questions = await Question.find()
-      .sort({ createdAt: -1 });
-
-
-    res.json({
-      questions
-    });
-
-
-  } catch(error){
-
-    res.status(500).json({
-      message: error.message
-    });
-
-  }
-
-});
+const { createQuestion, getQuestions}  = require('../controllers/question.controller')
+const middleware = require('../middleware/user.middleware')
 
 
 
-// POST nouvelle question
-router.post('/', async (req, res) => {
 
-    try {
-
-        console.log("QUESTION REÇUE :", req.body);
+router.post('/' , middleware , createQuestion);
+router.get('/' , createQuestion);
 
 
-        const { titre, description, tags } = req.body;
+module.exports = router ;
 
 
-        const newQuestion = await Question.create({
+// // GET toutes les questions
+// router.get("/", async (req, res) => {
 
-            titre,
-            description,
-            tags
+//   try {
 
-        });
-
-
-
-        res.status(201).json({
-
-            message:"Question créée avec succès",
-
-            question:newQuestion
-
-        });
+//     const questions = await Question.find()
+//       .sort({ createdAt: -1 });
 
 
-
-    } catch(error){
-
-
-        res.status(500).json({
-
-            message:error.message
-
-        });
-
-    }
-
-});
-
-// DELETE supprimer une question
-router.delete("/:id", async (req, res) => {
-
-  try {
-
-    const question = await Question.findByIdAndDelete(
-      req.params.id
-    );
+//     res.json({
+//       questions
+//     });
 
 
-    if(!question){
+//   } catch(error){
 
-      return res.status(404).json({
-        message:"Question introuvable"
-      });
+//     res.status(500).json({
+//       message: error.message
+//     });
 
-    }
+//   }
 
-
-    res.json({
-      message:"Question supprimée avec succès"
-    });
-
-
-  } catch(error){
-
-    res.status(500).json({
-      message:error.message
-    });
-
-  }
-
-});
+// });
 
 
 
-module.exports = router;
+// // POST nouvelle question
+// router.post('/', async (req, res) => {
+
+//     try {
+
+//         console.log("QUESTION REÇUE :", req.body);
+
+
+//         const { titre, description, tags } = req.body;
+
+
+//         const newQuestion = await Question.create({
+
+//             titre,
+//             description,
+//             tags
+
+//         });
+
+
+
+//         res.status(201).json({
+
+//             message:"Question créée avec succès",
+
+//             question:newQuestion
+
+//         });
+
+
+
+//     } catch(error){
+
+
+//         res.status(500).json({
+
+//             message:error.message
+
+//         });
+
+//     }
+
+// });
+
+// // DELETE supprimer une question
+// router.delete("/:id", async (req, res) => {
+
+//   try {
+
+//     const question = await Question.findByIdAndDelete(
+//       req.params.id
+//     );
+
+
+//     if(!question){
+
+//       return res.status(404).json({
+//         message:"Question introuvable"
+//       });
+
+//     }
+
+
+//     res.json({
+//       message:"Question supprimée avec succès"
+//     });
+
+
+//   } catch(error){
+
+//     res.status(500).json({
+//       message:error.message
+//     });
+
+//   }
+
+// });
+
+
+
+// module.exports = router;
