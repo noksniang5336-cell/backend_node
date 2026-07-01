@@ -29,7 +29,9 @@ const getQuestions = async (req, res) => {
       createdAt: -1
     });
 
-    res.json(questions);
+    res.json({
+     questions
+   });
 
   } catch(error){
 

@@ -7,7 +7,7 @@ const middleware = require('../middleware/user.middleware')
 
 
 router.post('/' , middleware , createQuestion);
-router.get('/' , createQuestion);
+router.get('/' , getQuestions);
 
 
 module.exports = router ;
